@@ -1,5 +1,7 @@
 package com.jayelmeynak.videoplayer.presentation.popularVideos
 
+import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -48,6 +51,12 @@ fun PopularVideosScreen(
     val pullRefreshState = rememberPullRefreshState(refreshing, onRefresh = {
         viewModel.onEvent(PopularVideosUiEvent.SwipeRefresh)
     })
+
+    SideEffect {
+        (context as? Activity)?.requestedOrientation =
+            ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+    }
+
     LaunchedEffect(key1 = videos.loadState) {
         if (videos.loadState.refresh is LoadState.Error) {
             Toast.makeText(
