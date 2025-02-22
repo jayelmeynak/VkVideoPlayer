@@ -57,11 +57,17 @@ class VideoRemoteMediator(
                 return MediatorResult.Success(endOfPaginationReached = videosDto.isEmpty())
             } else {
                 Log.d("MyLog", "Error: ${result.code()} ${result.message()}")
+                if(result.code() == 522) {
+                    return MediatorResult.Error(Exception("Включите VPN"))
+                }
                 return MediatorResult.Error(HttpException(result))
             }
         } catch (e: IOException) {
             return MediatorResult.Error(e)
         } catch (e: HttpException) {
+            if(e.code() == 522) {
+                return MediatorResult.Error(Exception("Включите VPN"))
+            }
             return MediatorResult.Error(e)
         }
     }
