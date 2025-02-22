@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface VideoDao {
-    @Query("SELECT * FROM videos ORDER BY id ASC")
+    @Query("SELECT * FROM videos")
     fun getPopularVideosPaged(): PagingSource<Int, VideoEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
