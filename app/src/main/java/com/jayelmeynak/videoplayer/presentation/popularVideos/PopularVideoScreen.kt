@@ -38,7 +38,8 @@ import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 @Composable
 fun PopularVideosScreen(
     modifier: Modifier = Modifier,
-    viewModel: PopularVideosViewModel = hiltViewModel()
+    viewModel: PopularVideosViewModel = hiltViewModel(),
+    onVideoClick: (String) -> Unit
 ) {
     val videos = viewModel.videoPagingFlow.collectAsLazyPagingItems()
     val context = LocalContext.current
@@ -83,6 +84,7 @@ fun PopularVideosScreen(
                                 viewModel.onEvent(
                                     PopularVideosUiEvent.OnVideoClick(video)
                                 )
+                                onVideoClick(video.videoUrl)
                             }
                         )
                     }
